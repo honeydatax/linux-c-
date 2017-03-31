@@ -71,10 +71,10 @@ printf("\e[14;%if\e[0;30;47m \e[0;30;40m ",xxx);
 printf("\e[15;%if\e[0;30;47m \e[0;30;40m ",xxx);
 for(iii=0;iii<4;iii++){
 tt=2+iii*3+(s);
-ttt=44-s*3;
+ttt=41+s*3;
 printf("\e[%i;%if\e[0;30;%im ",tt,xxx,ttt);
 }
-sleep(1);
+usleep(15000);
 xxx++;
 s++;
 if (xxx>77) xxx=0;
