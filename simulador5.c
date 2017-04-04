@@ -30,6 +30,7 @@ int main2();
 
 int main()
 {
+off_t lsek;
 int f1;
 int f2;
 char ttimes[20];
@@ -79,8 +80,9 @@ printf ("                    ");
 }
 
 printf ("\e[1;1f\\simulator: press esc to exit");
-do{
 f2=open(abc,O_RDWR);
+do{
+lsek=lseek(f2,(off_t)0,SEEK_SET);
 counter=0;
 a=fgetc(stdin);
 printf("\e[2;%if\e[0;30;47m \e[0;30;40m ",xxx);
@@ -111,9 +113,9 @@ xxx++;
 s++;
 if (xxx>77) xxx=0;
 if (s>1) s=0;
-close(f2);
-usleep(5000);
+usleep(3000);
 }while(a!=0x1B); 
+close(f2);
 oldt.c_lflag|=ECHO|ICANON;
 tcsetattr(fileno(stdin),TCSANOW,&oldt);
 printf ("\033c");
@@ -136,10 +138,13 @@ char buf[1];
 long counter=0;
 int ccc=0;
 int nnnull;
-
-do{
+off_t lsek;
 f1=open(ab,O_RDWR);
 f2=open(abc,O_RDWR);
+
+do{
+lsek=lseek(f1,(off_t)0,SEEK_SET);
+lsek=lseek(f2,(off_t)0,SEEK_SET);
 buf[0]='0';
 if (ccc==1) buf[0]='1' ;
 write(f2,buf,1);
@@ -147,10 +152,10 @@ buf[1]='0';
 read(f1,buf,1);
 ccc++;
 if (ccc>1)ccc=0;
-close(f1);
-close(f2);
 usleep(5000);
 }while(buf[0]!=1); 
+close(f1);
+close(f2);
 return 0;
 }
 
