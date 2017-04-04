@@ -112,7 +112,7 @@ s++;
 if (xxx>77) xxx=0;
 if (s>1) s=0;
 close(f2);
-usleep(11000);
+usleep(5000);
 }while(a!=0x1B); 
 oldt.c_lflag|=ECHO|ICANON;
 tcsetattr(fileno(stdin),TCSANOW,&oldt);
@@ -140,15 +140,16 @@ int nnnull;
 do{
 f1=open(ab,O_RDWR);
 f2=open(abc,O_RDWR);
-buf[1]='0';
-if (ccc==1) buf[1]='1' ;
+buf[0]='0';
+if (ccc==1) buf[0]='1' ;
 write(f2,buf,1);
+buf[1]='0';
 read(f1,buf,1);
 ccc++;
 if (ccc>1)ccc=0;
 close(f1);
 close(f2);
-usleep(11000);
+usleep(5000);
 }while(buf[0]!=1); 
 return 0;
 }
