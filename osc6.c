@@ -63,7 +63,7 @@ long counter=0;
 system ("sudo mkdir /mnt/ramdisk1");
 system ("sudo chmod 700 /mnt/ramdisk1/");
 system ("sudo mount -t tmpfs -o size=50m tmpfs /mnt/ramdisk1");
-buf[0]='0';
+buf[0]=0;
 f1=open(ab,O_CREAT|O_RDWR);
 f2=open(abc,O_CREAT|O_RDWR);
 f3=open(abcd,O_CREAT|O_RDWR);
@@ -144,7 +144,7 @@ close(f2);
 oldt.c_lflag|=ECHO|ICANON;
 tcsetattr(fileno(stdin),TCSANOW,&oldt);
 printf ("\033c");
-buf[0]='1';
+buf[0]=1;
 f1=open(ab,O_RDWR);
 write(f1,buf,1);
 close(f1);
@@ -228,7 +228,7 @@ counter=0;
 write(f3,&tttimes,25);
 write(f3,&counter2,sizeof(long));
 write(f3,&counter,sizeof(long));
-buf1[0]='0';
+buf1[0]=0;
 read(f1,buf1,1);
 }
 
@@ -281,6 +281,7 @@ if (ccc>1)ccc=0;
 close(f1);
 close(f2);
 close(f3);
+close(f4);
 return 0;
 }
 
