@@ -30,7 +30,16 @@ int main2();
 
 int main()
 {
+int v0=0;
+int v1=0;
+int v2=0;
+int v3=0;
+int ss=0;
 off_t lsek;
+int cc0=0;
+int cc1=0;
+int cc2=0;
+int cc3=0;
 int f1;
 int f2;
 char ttimes[20];
@@ -101,16 +110,22 @@ printf("\e[14;%if\e[0;30;47m \e[0;30;40m ",xxx);
 printf("\e[15;%if\e[0;30;47m \e[0;30;40m ",xxx);
 
 read(f2,buf,1);
-
+ss=8;
 for(iii=0;iii<4;iii++){
 s=0;
-if (buf[0]=='1') s=1;
+if (buf[0]>=ss){
+s=1;
+buf[0]=buf[0]-ss;
+}
+ss=ss/2;
 tt=2+iii*3+(s);
 ttt=41+s*3;
 printf("\e[%i;%if\e[0;30;%im ",tt,xxx,ttt);
 }
+
 xxx++;
 s++;
+
 if (xxx>77) xxx=0;
 if (s>1) s=0;
 usleep(3000);
@@ -131,6 +146,14 @@ return 0;
 
 int main2()
 {
+int cc0=0;
+int cc1=0;
+int cc2=0;
+int cc3=0;
+int v0=0;
+int v1=0;
+int v2=0;
+int v3=0;
 int f1;
 int f2;
 char t='0';
@@ -145,12 +168,42 @@ f2=open(abc,O_RDWR);
 do{
 lsek=lseek(f1,(off_t)0,SEEK_SET);
 lsek=lseek(f2,(off_t)0,SEEK_SET);
-buf[0]='0';
-if (ccc==1) buf[0]='1' ;
+buf[0]=0;
+if (v0==1)buf[0]=buf[0]+1;
+if (v1==1)buf[0]=buf[0]+2;
+if (v2==1)buf[0]=buf[0]+4;
+if (v3==1)buf[0]=buf[0]+8;
 write(f2,buf,1);
-buf[1]='0';
+buf[0]='0';
 read(f1,buf,1);
+cc0++;
+cc1++;
+cc2++;
+cc3++;
 ccc++;
+if (cc0>1){
+cc0=0;
+v0++;
+if (v0>1)v0=0;
+}
+if (cc1>2){
+cc1=0;
+v1++;
+if (v1>1)v1=0;
+}
+if (cc2>3){
+cc2=0;
+v2++;
+if (v2>1)v2=0;
+
+}
+if (cc3>4){
+cc3=0;
+v3++;
+if (v3>1)v3=0;
+}
+
+
 if (ccc>1)ccc=0;
 usleep(5000);
 }while(buf[0]!=1); 
