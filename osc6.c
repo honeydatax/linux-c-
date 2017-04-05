@@ -178,7 +178,7 @@ s[5]=0;
 s[6]=0;
 s[7]=0;
 
-
+int triger=0;
 int cc0=0;
 int cc1=0;
 int cc2=0;
@@ -219,6 +219,7 @@ b=start.tv_sec;
 lsek=lseek(f4,(off_t)0,SEEK_SET);
 if (b>c){
 lsek=lseek(f1,(off_t)0,SEEK_SET);
+if (triger!=0)write(f3,&counter,sizeof(long));
 gettimeofday(&ends,NULL);
 c=ends.tv_sec;
 time(&rawtime);
@@ -227,8 +228,8 @@ sprintf (tttimes,"%s",ctime(&rawtime));
 counter=0;
 write(f3,&tttimes,25);
 write(f3,&counter2,sizeof(long));
-write(f3,&counter,sizeof(long));
 buf1[0]=0;
+triger=1;
 read(f1,buf1,1);
 }
 
@@ -278,10 +279,11 @@ counter++;
 counter2++;
 if (ccc>1)ccc=0;
 }while(buf1[0]!=1); 
+write(f3,&counter,sizeof(long));
 close(f1);
 close(f2);
-close(f3);
 close(f4);
+close(f3);
 return 0;
 }
 
