@@ -206,7 +206,7 @@ if (v3>1)v3=0;
 
 if (ccc>1)ccc=0;
 usleep(5000);
-}while(buf[0]!=1); 
+}while(buf[0]!='1'); 
 close(f1);
 close(f2);
 return 0;
