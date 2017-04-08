@@ -23,8 +23,8 @@ struct timeval start, ends;
 FILE *fp;
 int bufa=0;
 int bufb=0;
-char *ab="/dev/cons0";
-char *abc="/dev/cons1";
+char *ab="cons0";
+char *abc="cons1";
 
 int main2();
 
@@ -48,12 +48,13 @@ int ttt=0;
 long counter=0;
 mkfifo (ab,0777);
 mkfifo (abc,0777);
+chmod (ab,0777);
+chmod (abc,0777);
 
-f1=open(ab,O_WRONLY);
-f2=open(abc,O_RDONLY);
 pid_t pid=fork();
 if (pid==0) main2();
 else{
+f1=open(ab,O_WRONLY|O_NONBLOCK);
 
 tcgetattr(fileno(stdin),&oldt);
 memcpy(&newt,&oldt,sizeof(struct termios));
@@ -72,6 +73,8 @@ printf ("                    ");
 }
 
 printf ("\e[1;1f\\simulator: press esc to exit");
+f2=open(abc,O_RDONLY|O_NONBLOCK);
+
 do{
 counter=0;
 a=fgetc(stdin);
@@ -107,7 +110,7 @@ usleep(11000);
 oldt.c_lflag|=ECHO|ICANON;
 tcsetattr(fileno(stdin),TCSANOW,&oldt);
 printf ("\033c");
-buf[0]='1';
+buf[0]=1;
 write(f1,buf,1);
 wait();
 close(f1);
@@ -128,12 +131,12 @@ char buf[1];
 long counter=0;
 int ccc=0;
 int nnnull;
-f1=open(ab,O_RDONLY);
-f2=open(abc,O_WRONLY);
+f1=open(ab,O_RDONLY|O_NONBLOCK);
+f2=open(abc,O_WRONLY|O_NONBLOCK);
 
 do{
-buf[1]='0';
-if (ccc==1) buf[1]='1' ;
+buf[0]='0';
+if (ccc==1) buf[0]='1' ;
 write(f2,buf,1);
 read(f1,buf,1);
 ccc++;
